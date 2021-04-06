@@ -26,25 +26,21 @@ public class MainActivity extends AppCompatActivity {
         mTxtSensors = findViewById(R.id.txtSensors);
         button = findViewById(R.id.Retrieve_btn);
 
+       button.setOnClickListener(this::onClick);
 
+       }
+    public void onClick(View v) {
+        sensorMgr = (SensorManager) getSystemService(SENSOR_SERVICE);
 
+        sensorList = sensorMgr.getSensorList(Sensor.TYPE_ALL);
 
-        button.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                sensorMgr = (SensorManager)getSystemService(SENSOR_SERVICE);
+        mTxtSensors.append("(# Sensors :" + sensorList.size() + ")\n\n");
+        for (Sensor sensor : sensorList) {
+            mTxtSensors.append("Sensor name :" + sensor.getName() + "\n");
+            mTxtSensors.append("Sensor type :" + sensor.getType() + "\n\n");
 
-                sensorList = sensorMgr.getSensorList(Sensor.TYPE_ALL);
-
-                mTxtSensors.append("(# Sensors :"+ sensorList.size()+")\n\n");
-                for(Sensor sensor : sensorList){
-                    mTxtSensors.append("Sensor name :"+sensor.getName()+"\n");
-                    mTxtSensors.append("Sensor type :"+sensor.getType()+"\n\n");
-
-                }
-
-            }
-        });
+        }
+    }
 
     }
-}
+
